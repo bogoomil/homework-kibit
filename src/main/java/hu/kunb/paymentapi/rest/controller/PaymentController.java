@@ -24,6 +24,6 @@ public class PaymentController implements PaymentsApi {
   @PostMapping
   public ResponseEntity<PaymentCreateResponse> createPayment(@Valid @RequestBody PaymentCreateRequest request) {
     service.processPayment(request.getClientId(), request.getTransactionId(), request.getAmount());
-    return ResponseEntity.status(201).body(new PaymentCreateResponse().transactionId(UUID.randomUUID()));
+    return ResponseEntity.status(200).body(new PaymentCreateResponse().transactionId(UUID.randomUUID()));
   }
 }

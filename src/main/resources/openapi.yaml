@@ -17,7 +17,7 @@ paths:
             schema:
               $ref: "#/components/schemas/PaymentCreateRequest"
       responses:
-        "201":
+        "200":
           description: "Payment created successfully"
           content:
             application/json:
