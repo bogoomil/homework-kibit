@@ -1,6 +1,7 @@
 package hu.kunb.paymentapi.rest.controller;
 
 
+import hu.kunb.paymentapi.core.exceptions.PaymentCreateException;
 import java.util.stream.Collectors;
 import org.openapitools.model.ErrorResponse;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +24,12 @@ public class GlobalExceptionHandler {
   }
 
   @ExceptionHandler(HttpMessageNotReadableException.class)
-  public ResponseEntity<ErrorResponse> handleInvalidUUIDException(HttpMessageNotReadableException ex) {
+  public ResponseEntity<ErrorResponse> handleHttpMessageNotReadableExceptionException(HttpMessageNotReadableException ex) {
     return ResponseEntity.badRequest().body(new ErrorResponse().errorCode(400).message(ex.getMessage()));
+  }
+
+  @ExceptionHandler(PaymentCreateException.class)
+  public ResponseEntity<ErrorResponse> handlePaymentCreateException(PaymentCreateException ex) {
+    return ResponseEntity.badRequest().body(new ErrorResponse().errorCode(ex.getErrorCode().getCode()).message(ex.getMessage()));
   }
 }

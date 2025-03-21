@@ -8,20 +8,21 @@ paths:
     post:
       summary: "Create payment"
       operationId: "createPayment"
+      description: "The transaction ID must be unique, otherwise a concurrent processing exception will be thrown. The amount must be less than or equal to 1000, because the simplified balance check always returns 1000 as the available amount."
       requestBody:
         description: "Data of the payment"
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Payment"
+              $ref: "#/components/schemas/PaymentCreateRequest"
       responses:
         "201":
           description: "Payment created successfully"
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/PaymentResponse"
+                $ref: "#/components/schemas/PaymentCreateResponse"
         "400":
           description: "Bad request"
           content:
@@ -37,26 +38,27 @@ paths:
 
 components:
   schemas:
-    Payment:
+    PaymentCreateRequest:
       type: object
       required:
         - clientId
-        - timestamp
+        - transactionId
         - amount
       properties:
         clientId:
           type: string
           format: uuid
           example: "550e8400-e29b-41d4-a716-446655440000"
-        timestamp:
+        transactionId:
           type: string
-          format: date-time
+          format: uuid
+          example: "550e8400-e29b-41d4-a716-446655440000"
         amount:
           type: integer
           format: int64
           example: 1
 
-    PaymentResponse:
+    PaymentCreateResponse:
       type: object
       properties:
         transactionId:
