@@ -6,6 +6,6 @@ import java.util.UUID;
 
 public interface PersistentGateway {
   Optional<PaymentRecord> findByTransactionId(UUID transactionId);
-  void save(PaymentRecord record);
+  void save(PaymentRecord paymentRecord);
   Integer getBalanceForClient(UUID clientId);
 }

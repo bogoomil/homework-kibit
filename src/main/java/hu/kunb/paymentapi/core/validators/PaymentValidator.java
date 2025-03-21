@@ -13,19 +13,19 @@ public class PaymentValidator {
 
   private final PersistentGateway persistentGateway;
 
-  public void validateRecord(PaymentRecord record){
-    checkBalance(record);
-    checkIfProcessed(record);
+  public void validateRecord(PaymentRecord paymentRecord){
+    checkBalance(paymentRecord);
+    checkIfProcessed(paymentRecord);
   }
 
-  private void checkBalance(PaymentRecord record) {
-    if(persistentGateway.getBalanceForClient(record.clientId()) < record.amount()){
+  private void checkBalance(PaymentRecord paymentRecord) {
+    if(persistentGateway.getBalanceForClient(paymentRecord.clientId()) < paymentRecord.amount()){
       throw new PaymentCreateException(ErrorCodes.INSUFFICIENT_BALANCE);
     }
   }
 
-  private void checkIfProcessed(PaymentRecord record) {
-    if(persistentGateway.findByTransactionId(record.transactionId()).isPresent()){
+  private void checkIfProcessed(PaymentRecord paymentRecord) {
+    if(persistentGateway.findByTransactionId(paymentRecord.transactionId()).isPresent()){
       throw new PaymentCreateException(ErrorCodes.CONCURRENT_PROCESSING);
     }
   }

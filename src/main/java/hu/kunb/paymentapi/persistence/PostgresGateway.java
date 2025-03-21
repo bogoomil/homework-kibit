@@ -21,8 +21,8 @@ public class PostgresGateway implements PersistentGateway {
   }
 
   @Override
-  public void save(PaymentRecord record) {
-    repository.save(mapPaymentRecord(record));
+  public void save(PaymentRecord paymentRecord) {
+    repository.save(mapPaymentRecord(paymentRecord));
   }
 
   @Override
@@ -30,11 +30,11 @@ public class PostgresGateway implements PersistentGateway {
     return 1000;
   }
 
-  private PaymentEntity mapPaymentRecord(PaymentRecord record){
+  private PaymentEntity mapPaymentRecord(PaymentRecord paymentRecord){
     PaymentEntity entity =  new PaymentEntity();
-    entity.setTransactionId(record.transactionId());
-    entity.setClientId(record.clientId());
-    entity.setAmount(record.amount());
+    entity.setTransactionId(paymentRecord.transactionId());
+    entity.setClientId(paymentRecord.clientId());
+    entity.setAmount(paymentRecord.amount());
     return entity;
   }
 }
