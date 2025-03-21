@@ -4,7 +4,7 @@ import lombok.Getter;
 
 @Getter
 public enum ErrorCodes {
-  INSUFFICIENT_BALANCE(1000), CONCURRENT_PROCESSING(2000);
+  INSUFFICIENT_BALANCE(1000), CONCURRENT_PROCESSING(2000), KAFKA_EXCEPTION(3000);
 
   private final int code;
 

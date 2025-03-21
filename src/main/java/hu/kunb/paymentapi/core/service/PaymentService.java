@@ -1,5 +1,6 @@
 package hu.kunb.paymentapi.core.service;
 
+import hu.kunb.paymentapi.core.gateways.NotificationGateway;
 import hu.kunb.paymentapi.core.gateways.PersistentGateway;
 import hu.kunb.paymentapi.core.model.PaymentRecord;
 import hu.kunb.paymentapi.core.validators.PaymentValidator;
@@ -15,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class PaymentService {
   
   private final PersistentGateway persistentGateway;
+  private final NotificationGateway notificationGateway;
   private final PaymentValidator validator;
 
   @Transactional
@@ -23,6 +25,7 @@ public class PaymentService {
     PaymentRecord paymentRecord = new PaymentRecord(clientId, transactionId, amount);
     validator.validateRecord(paymentRecord);
     persistentGateway.save(paymentRecord);
+    notificationGateway.sendNotification(paymentRecord);
     return paymentRecord.transactionId();
   }
 
