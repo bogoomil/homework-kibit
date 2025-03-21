@@ -21,7 +21,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Payment"
+                $ref: "#/components/schemas/PaymentResponse"
         "400":
           description: "Bad request"
           content:
@@ -40,11 +40,11 @@ components:
     Payment:
       type: object
       required:
-        - id
+        - clientId
         - timestamp
         - amount
       properties:
-        id:
+        clientId:
           type: string
           format: uuid
           example: "550e8400-e29b-41d4-a716-446655440000"
@@ -55,9 +55,14 @@ components:
           type: integer
           format: int64
           example: 1
-        name:
+
+    PaymentResponse:
+      type: object
+      properties:
+        transactionId:
           type: string
-          example: "John Doe"
+          format: uuid
+          example: "550e8400-e29b-41d4-a716-446655440000"
 
     ErrorResponse:
       type: object
