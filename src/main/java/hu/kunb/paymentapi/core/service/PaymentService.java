@@ -20,13 +20,12 @@ public class PaymentService {
   private final PaymentValidator validator;
 
   @Transactional
-  public UUID processPayment(UUID clientId, UUID transactionId ,Long amount){
+  public void processPayment(UUID clientId, UUID transactionId ,Long amount) {
     log.info("processing payment, client: {}, transaction: {}, amount {}", clientId, transactionId, amount);
     PaymentRecord paymentRecord = new PaymentRecord(clientId, transactionId, amount);
     validator.validateRecord(paymentRecord);
     persistentGateway.save(paymentRecord);
     notificationGateway.sendNotification(paymentRecord);
-    return paymentRecord.transactionId();
   }
 
 }
